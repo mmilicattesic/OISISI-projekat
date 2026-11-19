@@ -22,7 +22,10 @@ IzdavacService izdavacService = new IzdavacService(izdavacDao, autorDao);
 AutorConsoleController autorController = new AutorConsoleController(autorService);
 PosetilacConsoleController posetilacController = new PosetilacConsoleController(posetilacService); 
 KupovinaConsoleController kupovinaController = new KupovinaConsoleController(kupovinaService);     
-IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);         
+IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);
+
+KnjigaService knjigaService = new KnjigaService(knjigaDao, autorDao);
+KnjigaConsoleController knjigaController = new KnjigaConsoleController(knjigaService, autorService);
 
 
 while (true)
@@ -32,7 +35,8 @@ while (true)
     Console.WriteLine("1. Authors");
     Console.WriteLine("2. Visitors");  
     Console.WriteLine("3. Purchases"); 
-    Console.WriteLine("4. Publishers"); 
+    Console.WriteLine("4. Publishers");
+    Console.WriteLine("5. Books");
     Console.WriteLine("0. Exit");
     Console.Write("Choice: ");
 
@@ -45,7 +49,8 @@ while (true)
         case "1": autorController.Run(); break;
         case "2": posetilacController.Run(); break; 
         case "3": kupovinaController.Run(); break;  
-        case "4": izdavacController.Run(); break;   
+        case "4": izdavacController.Run(); break;
+        case "5": knjigaController.Run(); break;
         default: Console.WriteLine("Unknown option."); break;
     }
 }
