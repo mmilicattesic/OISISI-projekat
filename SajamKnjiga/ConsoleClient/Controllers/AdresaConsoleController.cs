@@ -132,7 +132,7 @@ namespace ConsoleClient.Controllers
             if (_service.Delete(id))
                 Console.WriteLine("Address deleted.");
             else
-                Console.WriteLine("Address could not be deleted.");
+                Console.WriteLine("Address could not be deleted (it is used by an author or a visitor).");
         }
 
 

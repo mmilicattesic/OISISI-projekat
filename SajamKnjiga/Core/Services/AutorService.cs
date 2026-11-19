@@ -10,12 +10,14 @@ namespace Core.Services
         private readonly IAutorDao _autorDao;
         private readonly IAdresaDao _adresaDao;
         private readonly IKnjigaDao _knjigaDao;
+        private readonly IIzdavacDao _izdavacDao;
 
-        public AutorService(IAutorDao autorDao, IAdresaDao adresaDao, IKnjigaDao knjigaDao)
+        public AutorService(IAutorDao autorDao, IAdresaDao adresaDao, IKnjigaDao knjigaDao, IIzdavacDao izdavacDao)
         {
             _autorDao = autorDao;
             _adresaDao = adresaDao;
             _knjigaDao = knjigaDao;
+            _izdavacDao = izdavacDao;
         }
 
         public List<Autor> GetAll()
@@ -57,11 +59,18 @@ namespace Core.Services
                 _knjigaDao.Update(knjiga);
             }
 
-            // 2. Delete the author
+            // 2. Remove the author as head of any publisher
+            foreach (Izdavac izdavac in _izdavacDao.GetAll().Where(i => i.SefIzdavacaId == id).ToList())
+            {
+                izdavac.SefIzdavacaId = null;
+                _izdavacDao.Update(izdavac);
+            }
+
+            // 3. Delete the author
             int adresaId = autor.AdresaId;
             _autorDao.Delete(id);
 
-            // 3. Delete the address if nobody else uses it
+            // 4. Delete the address if nobody else uses it
             if (!_autorDao.GetAll().Any(a => a.AdresaId == adresaId))
                 _adresaDao.Delete(adresaId);
 

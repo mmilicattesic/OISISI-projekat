@@ -14,13 +14,14 @@ PosetilacDao posetilacDao = new PosetilacDao(adresaDao);
 KupovinaDao kupovinaDao = new KupovinaDao(posetilacDao, knjigaDao);
 IzdavacDao izdavacDao = new IzdavacDao(autorDao);
 knjigaDao.ConnectPublishers(izdavacDao);
+posetilacDao.ConnectWishLists(knjigaDao);
 
 
-AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao);
-PosetilacService posetilacService = new PosetilacService(posetilacDao, adresaDao, kupovinaDao); 
+AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao, izdavacDao);
+PosetilacService posetilacService = new PosetilacService( posetilacDao, adresaDao, kupovinaDao, knjigaDao);
 KupovinaService kupovinaService = new KupovinaService(kupovinaDao, posetilacDao, knjigaDao);   
 IzdavacService izdavacService = new IzdavacService(izdavacDao, autorDao);
-AdresaService adresaService = new AdresaService(adresaDao);
+AdresaService adresaService = new AdresaService(adresaDao, autorDao, posetilacDao);
 
 
 AutorConsoleController autorController = new AutorConsoleController(autorService);
