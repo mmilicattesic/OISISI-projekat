@@ -13,6 +13,7 @@ KnjigaDao knjigaDao = new KnjigaDao(autorDao);
 PosetilacDao posetilacDao = new PosetilacDao(adresaDao);
 KupovinaDao kupovinaDao = new KupovinaDao(posetilacDao, knjigaDao);
 IzdavacDao izdavacDao = new IzdavacDao(autorDao);
+knjigaDao.ConnectPublishers(izdavacDao);
 
 
 AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao);
@@ -28,8 +29,8 @@ KupovinaConsoleController kupovinaController = new KupovinaConsoleController(kup
 IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);
 AdresaConsoleController adresaController = new AdresaConsoleController(adresaService);
 
-KnjigaService knjigaService = new KnjigaService(knjigaDao, autorDao);
-KnjigaConsoleController knjigaController = new KnjigaConsoleController(knjigaService, autorService);
+KnjigaService knjigaService = new KnjigaService(knjigaDao, autorDao, kupovinaDao, posetilacDao);
+KnjigaConsoleController knjigaController = new KnjigaConsoleController(knjigaService, autorService, izdavacService);
 
 
 while (true)
@@ -40,6 +41,7 @@ while (true)
     Console.WriteLine("2. Visitors");  
     Console.WriteLine("3. Purchases"); 
     Console.WriteLine("4. Publishers");
+    Console.WriteLine("5. Books");
     Console.WriteLine("6. Addresses");
     Console.WriteLine("0. Exit");
     Console.Write("Choice: ");

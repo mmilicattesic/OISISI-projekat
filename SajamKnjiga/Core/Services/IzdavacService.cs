@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿
+using Core.Interfaces;
 using Core.Models;
 
 namespace Core.Services
@@ -22,7 +23,7 @@ namespace Core.Services
 
         public bool Add(Izdavac izdavac)
         {
-            if (izdavac.SefIzdavacaId.HasValue && _autorDao.GetById(izdavac.SefIzdavacaId.Value) == null)
+            if (!IsValidHeadAuthor(izdavac.SefIzdavacaId))
                 return false;
 
             _izdavacDao.Add(izdavac);
@@ -31,12 +32,26 @@ namespace Core.Services
 
         public bool Update(Izdavac izdavac)
         {
-            if (izdavac.SefIzdavacaId.HasValue && _autorDao.GetById(izdavac.SefIzdavacaId.Value) == null)
+            if (!IsValidHeadAuthor(izdavac.SefIzdavacaId))
                 return false;
 
             return _izdavacDao.Update(izdavac);
         }
 
         public bool Delete(int id) => _izdavacDao.Delete(id);
+
+        private bool IsValidHeadAuthor(int? autorId)
+        {
+            // Publisher can temporarily have no head author.
+            if (!autorId.HasValue)
+                return true;
+
+            Autor? autor = _autorDao.GetById(autorId.Value);
+
+            if (autor == null)
+                return false;
+
+            return autor.GodineIskustva >= 5;
+        }
     }
 }
