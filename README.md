@@ -8,7 +8,7 @@ Projekat iz predmeta Osnovi informacionih sistema i softverskog inženjerstva
 
 \- Milica Tešić
 
-\- Lana Djukic
+\- Lana Đukić
 
 
 
