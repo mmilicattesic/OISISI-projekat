@@ -20,7 +20,7 @@ Milica Tešić: modeli Posetilac, Kupovina, Izdavac i Adresa, interfejs ISeriali
 
 
 
-Lana Djukic: modeli Autor i Knjiga, Serializer i FileStorage, DAO, servisi i konzolni meniji za autore, knjige i adrese, liste želja i zaštita referenci pri brisanju.
+Lana Đukić: modeli Autor i Knjiga, Serializer i FileStorage, DAO, servisi i konzolni meniji za autore, knjige i adrese, liste želja i zaštita referenci pri brisanju.
 
 
 
