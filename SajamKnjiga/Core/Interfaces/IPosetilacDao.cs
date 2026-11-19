@@ -9,6 +9,7 @@ namespace Core.Interfaces
         void Add(Posetilac posetilac);
         bool Update(Posetilac posetilac);
         bool Delete(int id);
+        void SaveWishLists();
     }
 }
 

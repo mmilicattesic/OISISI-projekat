@@ -75,16 +75,20 @@ namespace Core.Services
                     return false;
             }
 
-            // Remove the book from visitors' wish lists.
+            // Remove the book from every visitor's wish list.
             foreach (Posetilac posetilac in _posetilacDao.GetAll())
             {
                 posetilac.ListaZelja.RemoveAll(k => k.Id == id);
+                posetilac.ListaZeljaIds.RemoveAll(bookId => bookId == id);
             }
+
+            // Save the updated wish lists to posetioci.csv.
+            _posetilacDao.SaveWishLists();
 
             knjiga.PosetiociSaListeZelja.Clear();
             knjiga.Kupci.Clear();
 
-            // KnjigaDao also removes the book from its authors.
+            // KnjigaDao removes the book from its authors and publisher.
             return _knjigaDao.Delete(id);
         }
 
