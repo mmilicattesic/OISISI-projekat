@@ -4,6 +4,9 @@ using Core.Storage;
 
 namespace Core.DAO
 {
+    // Based on CRUDExample (VehiclesDAO, course exercise materials).
+    // Changes: the DAO has an interface, the Id is the biggest existing Id + 1,
+    // after loading each purchase is connected to its visitor and book.
     public class KupovinaDao : IKupovinaDao
     {
         private readonly FileStorage<Kupovina> _storage = new FileStorage<Kupovina>("kupovine.csv");

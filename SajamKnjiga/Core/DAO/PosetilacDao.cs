@@ -5,6 +5,9 @@ using Core.Storage;
 
 namespace Core.DAO
 {
+    // Based on CRUDExample (VehiclesDAO, course exercise materials).
+    // Changes: the DAO has an interface, the Id is the biggest existing Id + 1,
+    // after loading each visitor is connected to the address and the wish list.
     public class PosetilacDao : IPosetilacDao
     {
         private readonly FileStorage<Posetilac> _storage =
