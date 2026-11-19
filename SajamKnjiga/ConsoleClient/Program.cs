@@ -10,15 +10,29 @@ Console.InputEncoding = Encoding.UTF8;
 AdresaDao adresaDao = new AdresaDao();
 AutorDao autorDao = new AutorDao(adresaDao);
 KnjigaDao knjigaDao = new KnjigaDao(autorDao);
+PosetilacDao posetilacDao = new PosetilacDao(adresaDao);
+KupovinaDao kupovinaDao = new KupovinaDao(posetilacDao, knjigaDao);
+IzdavacDao izdavacDao = new IzdavacDao(autorDao);
 
 AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao);
+PosetilacService posetilacService = new PosetilacService(posetilacDao, adresaDao, kupovinaDao); 
+KupovinaService kupovinaService = new KupovinaService(kupovinaDao, posetilacDao, knjigaDao);   
+IzdavacService izdavacService = new IzdavacService(izdavacDao, autorDao);                    
+
 AutorConsoleController autorController = new AutorConsoleController(autorService);
+PosetilacConsoleController posetilacController = new PosetilacConsoleController(posetilacService); 
+KupovinaConsoleController kupovinaController = new KupovinaConsoleController(kupovinaService);     
+IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);         
+
 
 while (true)
 {
     Console.WriteLine();
     Console.WriteLine("=== Book Fair ===");
     Console.WriteLine("1. Authors");
+    Console.WriteLine("2. Visitors");  
+    Console.WriteLine("3. Purchases"); 
+    Console.WriteLine("4. Publishers"); 
     Console.WriteLine("0. Exit");
     Console.Write("Choice: ");
 
@@ -29,6 +43,9 @@ while (true)
     switch (choice)
     {
         case "1": autorController.Run(); break;
+        case "2": posetilacController.Run(); break; 
+        case "3": kupovinaController.Run(); break;  
+        case "4": izdavacController.Run(); break;   
         default: Console.WriteLine("Unknown option."); break;
     }
 }
