@@ -13,16 +13,25 @@ KnjigaDao knjigaDao = new KnjigaDao(autorDao);
 PosetilacDao posetilacDao = new PosetilacDao(adresaDao);
 KupovinaDao kupovinaDao = new KupovinaDao(posetilacDao, knjigaDao);
 IzdavacDao izdavacDao = new IzdavacDao(autorDao);
+knjigaDao.ConnectPublishers(izdavacDao);
+posetilacDao.ConnectWishLists(knjigaDao);
 
-AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao);
-PosetilacService posetilacService = new PosetilacService(posetilacDao, adresaDao, kupovinaDao); 
+
+AutorService autorService = new AutorService(autorDao, adresaDao, knjigaDao, izdavacDao);
+PosetilacService posetilacService = new PosetilacService( posetilacDao, adresaDao, kupovinaDao, knjigaDao);
 KupovinaService kupovinaService = new KupovinaService(kupovinaDao, posetilacDao, knjigaDao);   
-IzdavacService izdavacService = new IzdavacService(izdavacDao, autorDao);                    
+IzdavacService izdavacService = new IzdavacService(izdavacDao, autorDao);
+AdresaService adresaService = new AdresaService(adresaDao, autorDao, posetilacDao);
+
 
 AutorConsoleController autorController = new AutorConsoleController(autorService);
 PosetilacConsoleController posetilacController = new PosetilacConsoleController(posetilacService); 
 KupovinaConsoleController kupovinaController = new KupovinaConsoleController(kupovinaService);     
-IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);         
+IzdavacConsoleController izdavacController = new IzdavacConsoleController(izdavacService);
+AdresaConsoleController adresaController = new AdresaConsoleController(adresaService);
+
+KnjigaService knjigaService = new KnjigaService(knjigaDao, autorDao, kupovinaDao, posetilacDao);
+KnjigaConsoleController knjigaController = new KnjigaConsoleController(knjigaService, autorService, izdavacService);
 
 
 while (true)
@@ -32,7 +41,9 @@ while (true)
     Console.WriteLine("1. Authors");
     Console.WriteLine("2. Visitors");  
     Console.WriteLine("3. Purchases"); 
-    Console.WriteLine("4. Publishers"); 
+    Console.WriteLine("4. Publishers");
+    Console.WriteLine("5. Books");
+    Console.WriteLine("6. Addresses");
     Console.WriteLine("0. Exit");
     Console.Write("Choice: ");
 
@@ -45,7 +56,9 @@ while (true)
         case "1": autorController.Run(); break;
         case "2": posetilacController.Run(); break; 
         case "3": kupovinaController.Run(); break;  
-        case "4": izdavacController.Run(); break;   
+        case "4": izdavacController.Run(); break;
+        case "5": knjigaController.Run(); break;
+        case "6": adresaController.Run(); break;
         default: Console.WriteLine("Unknown option."); break;
     }
 }

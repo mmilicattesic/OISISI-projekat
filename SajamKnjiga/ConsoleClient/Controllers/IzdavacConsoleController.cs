@@ -57,7 +57,7 @@ namespace ConsoleClient.Controllers
         {
             Console.WriteLine("--- New publisher ---");
             Izdavac izdavac = ReadPublisher(null);
-            Console.WriteLine(_service.Add(izdavac) ? "Publisher added." : "Invalid Head Author Id.");
+            Console.WriteLine(_service.Add(izdavac) ? "Publisher added." : "Head author must exist and have at least 5 years of experience.");
         }
 
         private void Edit()
@@ -70,7 +70,9 @@ namespace ConsoleClient.Controllers
             Izdavac changed = ReadPublisher(old);
             changed.Id = old.Id;
 
-            Console.WriteLine(_service.Update(changed) ? "Publisher updated." : "Update failed.");
+            Console.WriteLine(_service.Update(changed)
+            ? "Publisher updated."
+             : "Head author must exist and have at least 5 years of experience, or the publisher was not found.");
         }
 
         private void Delete()

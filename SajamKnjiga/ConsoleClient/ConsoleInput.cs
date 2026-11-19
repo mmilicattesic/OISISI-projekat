@@ -37,7 +37,26 @@ namespace ConsoleClient
                 Console.WriteLine($"Enter a whole number between {min} and {max}.");
             }
         }
+        public static decimal ReadDecimal(string label, decimal min, decimal max, decimal? current = null)
+        {
+            while (true)
+            {
+                Console.Write(current == null ? $"{label}: " : $"{label} [{current:F2}]: ");
+                string? input = Console.ReadLine();
 
+                if (string.IsNullOrWhiteSpace(input) && current != null)
+                    return current.Value;
+
+                // Both 999.50 and 999,50 are accepted
+                if (input != null
+                    && decimal.TryParse(input.Replace(',', '.'), NumberStyles.Number,
+                        CultureInfo.InvariantCulture, out decimal value)
+                    && value >= min && value <= max)
+                    return value;
+
+                Console.WriteLine($"Enter a number between {min} and {max}.");
+            }
+        }
         public static DateOnly ReadDate(string label, DateOnly? current = null)
         {
             while (true)

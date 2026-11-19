@@ -4,7 +4,10 @@ using Core.Storage;
 
 namespace Core.DAO
 {
+    // Based on CRUDExample (VehiclesDAO, course exercise materials).
+    // Changes: the DAO has an interface, the Id is the biggest existing Id + 1.
     // Data access for addresses: reads and writes them, no business logic.
+  
     public class AdresaDao : IAdresaDao
     {
         private readonly FileStorage<Adresa> _storage = new FileStorage<Adresa>("adrese.csv");
