@@ -1,1 +1,4 @@
-<Solution />
+<Solution>
+  <Project Path="ConsoleClient/ConsoleClient.csproj" />
+  <Project Path="Core/Core.csproj" />
+</Solution>
